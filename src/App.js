@@ -1,23 +1,73 @@
-import logo from './logo.svg';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Stack from 'react-bootstrap/Stack';
 import './App.css';
 
 function App() {
+  const [taskList, setTaskList] = useState([]);
+  const [newTask, setNewTask] = useState("");
+  const [isCompleted, setIsCompleted] = useState("");
+
+  const updateText = (event) => {
+    setNewTask(event.target.value);
+
+  }
+
+  const addTask = () => {
+    const task = {
+      id: taskList.length === 0 ? 1: taskList[taskList.length - 1].id + 1,
+      taskValue: newTask,
+      isCompleted: "NotComplete",
+      priority: 1,
+
+    }
+    setTaskList([...taskList, task]);
+  }
+
+  const completeTask = (id) => {
+    setIsCompleted(isCompleted ? "Complete" : "NotComplete" )
+    setTaskList(taskList.map((task) => {
+      if(task.id === id){
+        if(task.isCompleted === "NotComplete"){
+          return {...task, isCompleted: "Complete"};
+        }
+        else{
+          return {...task, isCompleted: "NotComplete"};
+        }
+      }
+      return task
+    }))
+  }
+
+  const deleteTask = (id) => {
+    setTaskList(taskList.filter((task) => task.id !== id))
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='Title'><h1> To-Do App</h1></div>
+      <div className='AddTask'>
+        <Stack direction="horizontal" gap={3}>
+          <Form.Control className='me-auto' type="text" placeholder="Add Item" onChange={updateText}/>
+          <Button variant='primary' onClick={addTask}>Add</Button>
+        </Stack>
+      </div>
+      <div className='TaskList'>
+        {taskList.map((task) => {
+          return (
+            <div className="Task">
+              <Stack direction="horizontal" gap={3}>
+                  <span className={task.isCompleted}>{task.taskValue}</span>
+                  <Form.Check className='ms-auto' type={'checkbox'} size="sm" onChange={() => completeTask(task.id)}></Form.Check>
+                  <Button className='' variant="danger" size="sm" onClick={() => deleteTask(task.id)}>Delete</Button>{' '}
+              </Stack>
+        </div>
+          )
+        })}
+        
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  justify-content: center;
 }
 
 .App-logo {
@@ -35,4 +36,28 @@
   to {
     transform: rotate(360deg);
   }
+}
+.AddTask {
+  margin: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  width:50%;
+}
+.TaskList {
+  margin: auto;
+  width: 70%;
+  
+  padding: 10px;
+  
+}
+.Task {
+  margin: 1rem;
+  
+}
+.Complete {
+  text-decoration: line-through;
+  
+}
+.NotComplete {
+  text-decoration: none;
 }

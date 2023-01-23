@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Stack from 'react-bootstrap/Stack';
 import './App.css';
+import { Task } from './Task'
 
 function App() {
   const [taskList, setTaskList] = useState([]);
@@ -43,6 +44,7 @@ function App() {
 
   const deleteTask = (id) => {
     setTaskList(taskList.filter((task) => task.id !== id))
+
   }
 
   return (
@@ -57,13 +59,7 @@ function App() {
       <div className='TaskList'>
         {taskList.map((task) => {
           return (
-            <div className="Task">
-              <Stack direction="horizontal" gap={3}>
-                  <span className={task.isCompleted}>{task.taskValue}</span>
-                  <Form.Check className='ms-auto' type={'checkbox'} size="sm" onChange={() => completeTask(task.id)}></Form.Check>
-                  <Button className='' variant="danger" size="sm" onClick={() => deleteTask(task.id)}>Delete</Button>{' '}
-              </Stack>
-        </div>
+            <Task id={task.id} taskValue={task.taskValue} isCompleted={task.isCompleted} completeTask={completeTask} deleteTask={deleteTask}/>
           )
         })}
         

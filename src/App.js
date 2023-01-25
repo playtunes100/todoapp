@@ -9,7 +9,6 @@ import { Task } from './Task'
 function App() {
   const [taskList, setTaskList] = useState([]);
   const [newTask, setNewTask] = useState("");
-  const [isCompleted, setIsCompleted] = useState("");
 
   const updateText = (event) => {
     setNewTask(event.target.value);
@@ -20,23 +19,16 @@ function App() {
     const task = {
       id: taskList.length === 0 ? 1: taskList[taskList.length - 1].id + 1,
       taskValue: newTask,
-      isCompleted: "NotComplete",
-      priority: 1,
-
+      isCompleted: false,
     }
     setTaskList([...taskList, task]);
   }
 
   const completeTask = (id) => {
-    setIsCompleted(isCompleted ? "Complete" : "NotComplete" )
+    
     setTaskList(taskList.map((task) => {
       if(task.id === id){
-        if(task.isCompleted === "NotComplete"){
-          return {...task, isCompleted: "Complete"};
-        }
-        else{
-          return {...task, isCompleted: "NotComplete"};
-        }
+        return {...task, isCompleted: true};
       }
       return task
     }))
@@ -59,7 +51,7 @@ function App() {
       <div className='TaskList'>
         {taskList.map((task) => {
           return (
-            <Task id={task.id} taskValue={task.taskValue} isCompleted={task.isCompleted} completeTask={completeTask} deleteTask={deleteTask}/>
+            <Task key={task.id} id={task.id} taskValue={task.taskValue} isCompleted={task.isCompleted} completeTask={completeTask} deleteTask={deleteTask}/>
           )
         })}
         

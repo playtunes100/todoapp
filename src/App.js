@@ -1,10 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Stack from 'react-bootstrap/Stack';
 import './App.css';
 import { Task } from './Task'
+import { AddTask } from './AddTask'
 
 function App() {
   const [taskList, setTaskList] = useState([]);
@@ -28,7 +26,7 @@ function App() {
     
     setTaskList(taskList.map((task) => {
       if(task.id === id){
-        return {...task, isCompleted: true};
+        return {...task, isCompleted: task.isCompleted ? false : true};
       }
       return task
     }))
@@ -42,12 +40,7 @@ function App() {
   return (
     <div className="App">
       <div className='Title'><h1> To-Do App</h1></div>
-      <div className='AddTask'>
-        <Stack direction="horizontal" gap={3}>
-          <Form.Control className='me-auto' type="text" placeholder="Add Item" onChange={updateText}/>
-          <Button variant='primary' onClick={addTask}>Add</Button>
-        </Stack>
-      </div>
+      <AddTask updateText={updateText} addTask={addTask} />
       <div className='TaskList'>
         {taskList.map((task) => {
           return (
